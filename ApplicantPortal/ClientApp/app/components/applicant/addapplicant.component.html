@@ -1,0 +1,43 @@
+﻿<script>
+
+var app = angular.module('newApp',  []);
+app.directive('myDirective', function() {
+  return {
+     require: 'ngModel',
+     link: function (scope, element, attr, mCtrl) {
+         mCtrl.$validators.myDirective = function myValidation(value)  {
+        if (value.indexOf("e") > -1)  {
+          return true;
+        } else {
+           return false;
+         }
+       }
+//      mCtrl.$parsers.push(myValidation);
+     }
+  };
+});
+
+
+</script>
+<table class='table'>
+    <tr>
+        <td>
+            <form (ngSubmit)="applicantSubmit()" ng-app="newApp" #addform="ngForm">
+                <div class="form-group"> <label for="appUniqueCode">Unique Code</label> <input type="text" [(ngModel)]="model.appUniqueCode" name="appUniqueCode" class="form-control" id="appUniqueCode" required #appUniqueCode="ngModel" autocomplete="off" (change)="appUniqueCodeChange()"> </div>
+                <div [hidden]="appUniqueCode.valid || appUniqueCode.pristine" class="alert alert-danger"> Unique Code is required </div>
+                <div class="form-group"> <label for="appFirstName">First Name</label> <input type="text" [(ngModel)]="model.appFirstName" name="appFirstName" class="form-control" id="appFirstName" required my-directive #appFirstName="ngModel"> </div>
+                <div [hidden]="appFirstName.valid || appFirstName.pristine" class="alert alert-danger"> Unique Code is not valid </div>
+                <div class="form-group"> <label for="appLastName">Last Name</label> <input type="text" [(ngModel)]="model.appLastName" name="appLastName" class="form-control" id="appLastName" required my-directive #appLastName="ngModel"> </div>
+                <div [hidden]="appLastName.valid || appLastName.pristine" class="alert alert-danger"> Unique Code is not valid </div>
+                <div class="form-group"> <label for="Email">Email</label> <input type="text" [(ngModel)]="model.appEmail" name="appEmail" class="form-control" id="appEmail" required #appEmail="ngModel"> </div>
+                <div class="form-group"> <label for="Birthdate">Birth Date</label> <input type="text" [(ngModel)]="model.appBirthdate" name="appBirthdate" class="form-control" id="appBirthdate" required #appBirthdate="ngModel"> </div>
+                <div class="form-group"> <input type="text" [(ngModel)]="model.appGoodCode" name="appGoodCode" class="form-control" id="appGoodCode" required #appGoodCode="ngModel"> </div>
+                <!--div [hidden]="name.valid || name.pristine" class="alert alert-danger"> Applicant Name is required </div-->
+                <!--div class="form-group"> <label for="name">valid_upload</label> <input type="text" [(ngModel)]="model.valid_upload" name="valid_upload" class="form-control" id="valid_upload" #valid_upload="ngModel"> </div-->
+                <!--div [hidden]="valid_upload.valid || mobile_no.pristine" class="alert alert-danger"> Applicant Mobile Number is required </div-->
+                <div class="form-group"> <input type="file" name="appImage" required (change)="fileChange(input)" #input /> </div>
+                <div> <img [attr.src]='file_srcs[0]' alt="" /> </div> <button type="submit" class="btn btn-default form-control" [disabled]="!addform.form.valid">Create Applicant</button>
+            </form>
+        </td>
+    </tr>
+</table>
