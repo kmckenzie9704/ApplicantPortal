@@ -23,6 +23,11 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\applicant\addapplicant.component.ts" />
+    <None Remove="webpack.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="webpack.config.js" />
   </ItemGroup>
 
   <ItemGroup>
